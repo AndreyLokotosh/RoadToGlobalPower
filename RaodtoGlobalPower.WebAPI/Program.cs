@@ -18,8 +18,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Регистрация репозитория в DI контейнер
+// Регистрация репозиториев в DI контейнер
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IAttestationRepository, AttestationRepository>(); // Добавляем AttestationRepository
 
 // Настройка Swagger
 builder.Services.AddSwaggerGen(c =>
