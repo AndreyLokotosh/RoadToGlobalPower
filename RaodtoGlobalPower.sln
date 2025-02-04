@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaodtoGlobalPower.WebAPI", "RaodtoGlobalPower.WebAPI\RaodtoGlobalPower.WebAPI.csproj", "{E7D73D4F-F68E-4B20-861E-95D25BF13D8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaodtoGlobalPower.Domain", "RaodtoGlobalPower.Domain\RaodtoGlobalPower.Domain.csproj", "{B2499F91-0D87-4F3F-B0A5-FF2CE9D99C7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaodtoGlobalPower.Infrastructure", "RaodtoGlobalPower.Infrastructure\RaodtoGlobalPower.Infrastructure.csproj", "{6819C949-E6B4-4A55-8A24-628BD7321532}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7D73D4F-F68E-4B20-861E-95D25BF13D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7D73D4F-F68E-4B20-861E-95D25BF13D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7D73D4F-F68E-4B20-861E-95D25BF13D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7D73D4F-F68E-4B20-861E-95D25BF13D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2499F91-0D87-4F3F-B0A5-FF2CE9D99C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2499F91-0D87-4F3F-B0A5-FF2CE9D99C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2499F91-0D87-4F3F-B0A5-FF2CE9D99C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2499F91-0D87-4F3F-B0A5-FF2CE9D99C7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6819C949-E6B4-4A55-8A24-628BD7321532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6819C949-E6B4-4A55-8A24-628BD7321532}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6819C949-E6B4-4A55-8A24-628BD7321532}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6819C949-E6B4-4A55-8A24-628BD7321532}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(RiderSharedRunConfigurations) = postSolution
+		File = RaodtoGlobalPower.WebAPI\Properties\launchsettings\RaodtoGlobalPower.WebAPI.run.xml
+	EndGlobalSection
+EndGlobal
