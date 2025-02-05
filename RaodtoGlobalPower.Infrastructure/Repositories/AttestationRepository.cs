@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RaodtoGlobalPower.Domain.Interfaces;
 using RaodtoGlobalPower.Domain.Models;
 using RaodtoGlobalPower.Infrastructure.Data;
 
@@ -25,10 +26,10 @@ public class AttestationRepository : IAttestationRepository
             .ToListAsync();
     }
 
-    public async Task<Attestation> AddAsync(Attestation attestation)
+    public async Task<int> AddAsync(Attestation attestation)
     {
         _context.Attestations.Add(attestation);
         await _context.SaveChangesAsync();
-        return attestation;
+        return attestation.Id;
     }
 }

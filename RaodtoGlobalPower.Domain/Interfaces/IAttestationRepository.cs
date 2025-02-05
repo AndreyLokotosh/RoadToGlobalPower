@@ -1,10 +1,10 @@
 ﻿using RaodtoGlobalPower.Domain.Models;
 
-namespace RaodtoGlobalPower.Infrastructure.Repositories;
+namespace RaodtoGlobalPower.Domain.Interfaces;
 
 public interface IAttestationRepository
 {
     Task<IEnumerable<Attestation>> GetAllAsync();
     Task<IEnumerable<Attestation>> GetByEmployeeIdAsync(int employeeId);
-    Task<Attestation> AddAsync(Attestation attestation);
+    Task<int> AddAsync(Attestation attestation);
 }
