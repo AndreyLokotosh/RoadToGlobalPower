@@ -52,7 +52,7 @@ public class EmployeeController : ControllerBase
         {
             FirstName = employee.FirstName,
             LastName = employee.LastName,
-            Position = employee.Position,
+            Position = employee.Position.ToString(),
             Salary = employee.Salary,
             DateOfBirth = employee.DateOfBirth,
             DateHired = employee.DateHired,

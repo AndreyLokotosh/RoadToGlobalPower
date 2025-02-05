@@ -1,4 +1,7 @@
-﻿namespace RaodtoGlobalPower.WebAPI.Controllers;
+﻿using RaodtoGlobalPower.Domain.Models;
+
+namespace RaodtoGlobalPower.WebAPI.Controllers;
+
 
 /// <summary>
 /// ДТО сотрудника
@@ -9,7 +12,7 @@ public class EmployeeDto
     public string LastName { get; set; }
     public string Position { get; set; }
     public decimal Salary { get; set; }
-    public DateTime DateOfBirth { get; set; }
-    public DateTime DateHired { get; set; }
+    public DateOnly DateOfBirth { get; set; }
+    public DateOnly DateHired { get; set; }
     public List<AttestationDto> Attestations { get; set; }
 }
