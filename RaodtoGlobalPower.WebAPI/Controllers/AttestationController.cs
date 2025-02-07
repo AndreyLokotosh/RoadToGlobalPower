@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RaodtoGlobalPower.Infrastructure.Data;
+using RaodtoGlobalPower.Domain.Interfaces;
 using RaodtoGlobalPower.Domain.Models;
+using RaodtoGlobalPower.Infrastructure.Repositories;
 
 namespace RaodtoGlobalPower.WebAPI.Controllers;
 
@@ -9,27 +9,29 @@ namespace RaodtoGlobalPower.WebAPI.Controllers;
 [ApiController]
 public class AttestationController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
-
-    public AttestationController(ApplicationDbContext context)
+    private readonly IAttestationRepository _attestationRepository;
+    public AttestationController(IAttestationRepository attestationRepository)
     {
-        _context = context;
+        _attestationRepository = attestationRepository;
     }
-
-    // Получить все аттестации
+    
+/// <summary>
+/// Получить все аттестации
+/// </summary>
+/// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Attestation>>> GetAttestations()
-    {
-        return await _context.Attestations.ToListAsync();
-    }
+    public async Task<ActionResult<IEnumerable<Attestation>>> GetAttestations() 
+        => Ok(await _attestationRepository.GetAllAsync());
 
-    // Получить аттестации конкретного сотрудника по его ID
+/// <summary>
+/// Получить аттестации конкретного сотрудника по его ID
+/// </summary>
+/// <param name="employeeId"></param>
+/// <returns></returns>
     [HttpGet("employee/{employeeId}")]
     public async Task<ActionResult<IEnumerable<Attestation>>> GetAttestationsByEmployee(int employeeId)
     {
-        var attestations = await _context.Attestations
-            .Where(a => a.EmployeeId == employeeId)
-            .ToListAsync();
+        var attestations = await _attestationRepository.GetByEmployeeIdAsync(employeeId);
 
         if (!attestations.Any())
         {
@@ -39,28 +41,28 @@ public class AttestationController : ControllerBase
         return Ok(attestations);
     }
 
-    // Добавить аттестацию для сотрудника с использованием DTO
+/// <summary>
+/// Добавить аттестацию сотрудника с использованием ДТО
+/// </summary>
+/// <param name="attestationDto"></param>
+/// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Attestation>> AddAttestation([FromBody] AttestationDto attestationDto)
+    public async Task<ActionResult<int>> AddAttestation([FromBody] AttestationDto attestationDto)
     {
         if (attestationDto == null)
         {
             return BadRequest("Неверные данные.");
         }
-
-        // Преобразуем DTO в модель аттестации
+        
         var attestation = new Attestation
         {
             EmployeeId = attestationDto.EmployeeId,
             Date = attestationDto.Date,
             Name = attestationDto.Name
         };
-
-        // Добавление аттестации в базу данных
-        _context.Attestations.Add(attestation);
-        await _context.SaveChangesAsync();
-
-        // Возвращаем успешный ответ с созданной аттестацией
-        return CreatedAtAction(nameof(GetAttestationsByEmployee), new { employeeId = attestation.EmployeeId }, attestation);
+        
+        var createdAttestationId = await _attestationRepository.AddAsync(attestation);
+        
+        return Ok(createdAttestationId);
     }
 }
