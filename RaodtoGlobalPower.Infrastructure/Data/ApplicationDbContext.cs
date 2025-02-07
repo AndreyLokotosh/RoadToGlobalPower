@@ -19,10 +19,9 @@ public class ApplicationDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Employee>()
             .Property(e => e.Position)
-            .HasConversion<string>()  // Хранить в БД как строку
-            .HasColumnType("VARCHAR(50)"); // Длина строки для хранения enum
-        
-        // Конвертация DateOnly в DateTime
+            .HasConversion<string>()  
+            .HasColumnType("VARCHAR(50)");
+
         var dateOnlyConverter = new ValueConverter<DateOnly, DateTime>(
             dateOnly => dateOnly.ToDateTime(TimeOnly.MinValue),
             dateTime => DateOnly.FromDateTime(dateTime)
@@ -30,15 +29,14 @@ public class ApplicationDbContext : DbContext
         
         modelBuilder.Entity<Employee>()
             .Property(e => e.DateOfBirth)
-            .HasConversion(dateOnlyConverter) // ✅ Настроили для DateOfBirth
-            .HasColumnType("DATE"); // Храним как DATE в БД
+            .HasConversion(dateOnlyConverter) 
+            .HasColumnType("DATE"); 
         
         modelBuilder.Entity<Employee>()
             .Property(e => e.DateHired)
-            .HasConversion(dateOnlyConverter) // ✅ Настроили для DateHired
-            .HasColumnType("DATE"); // Храним как DATE в БД
-        
-        // Настраиваем связь один-ко-многим
+            .HasConversion(dateOnlyConverter) 
+            .HasColumnType("DATE");
+
         modelBuilder.Entity<Attestation>()
             .HasOne(a => a.Employee)
             .WithMany(e => e.Attestations)
