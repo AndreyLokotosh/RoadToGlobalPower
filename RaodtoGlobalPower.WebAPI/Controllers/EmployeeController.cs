@@ -52,7 +52,7 @@ public class EmployeeController : ControllerBase
         {
             FirstName = employee.FirstName,
             LastName = employee.LastName,
-            Position = employee.Position,
+            Position = employee.Position.ToString(),
             Salary = employee.Salary,
             DateOfBirth = employee.DateOfBirth,
             DateHired = employee.DateHired,
@@ -66,8 +66,7 @@ public class EmployeeController : ControllerBase
         return Ok(employeeDto);
      
     }
-
-
+    
     [HttpPost]
     public async Task<ActionResult<Employee>> CreateEmployee(Employee employee)
     {

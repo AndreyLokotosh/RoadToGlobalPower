@@ -56,10 +56,10 @@ namespace RaodtoGlobalPower.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DateHired")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("DATE");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("DATE");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -71,7 +71,7 @@ namespace RaodtoGlobalPower.Infrastructure.Migrations
 
                     b.Property<string>("Position")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("VARCHAR(50)");
 
                     b.Property<decimal>("Salary")
                         .HasColumnType("numeric");
