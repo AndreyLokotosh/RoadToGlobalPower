@@ -70,7 +70,6 @@ namespace RaodtoGlobalPower.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Position")
-                        .IsRequired()
                         .HasColumnType("VARCHAR(50)");
 
                     b.Property<decimal>("Salary")

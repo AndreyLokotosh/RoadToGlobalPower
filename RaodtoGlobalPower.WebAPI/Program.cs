@@ -1,16 +1,22 @@
 ﻿using System.Reflection;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using RaodtoGlobalPower.Domain.Interfaces;
 using RaodtoGlobalPower.Infrastructure.Data;
 using RaodtoGlobalPower.Infrastructure.Repositories;
 
-var builder = WebApplication.CreateBuilder(args);
+
+var builder = WebApplication.CreateBuilder(args) ?? throw new ArgumentNullException("WebApplication.CreateBuilder(args)");
 
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddEnvironmentVariables();
 
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.Converters.Add(new DateOnlyConverter());
+});
 // Настройка сервисов
 builder.Services.AddControllers();
 

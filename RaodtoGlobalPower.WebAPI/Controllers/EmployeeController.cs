@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RaodtoGlobalPower.Domain.Interfaces;
 using RaodtoGlobalPower.Domain.Models;
-
+using System.Text.Json.Serialization;
 namespace RaodtoGlobalPower.WebAPI.Controllers;
 
 [Route("api/[controller]")]
@@ -28,6 +28,36 @@ public class EmployeeController : ControllerBase
     {
         var employees = await _employeeRepository.GetAllEmployeesAsync();
         return Ok(employees);
+    }
+
+    /// <summary>
+    /// Запрос для фильтра сотрудников
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    [HttpGet( "GetEmployeesFilters")]
+    public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployeesFilters([FromQuery] EmployeeFilterDTO filter)
+    {
+        var employees = await _employeeRepository.GetFilteredEmployeesAsync(
+            filter.Position, filter.MinSalary, filter.MaxSalary, filter.HiredAfter, filter.HiredBefore
+        );
+
+        var employeeDtos = employees.Select(e => new EmployeeDto
+        {
+            FirstName = e.FirstName,
+            LastName = e.LastName,
+            Position = e.Position?.ToString(),
+            Salary = e.Salary,
+            DateOfBirth = e.DateOfBirth,
+            DateHired = e.DateHired,
+            Attestations = e.Attestations.Select(a => new AttestationDto
+            {
+                Name = a.Name,
+                Date = a.Date
+            }).ToList()
+        }).ToList();
+
+        return Ok(employeeDtos);
     }
 
     /// <summary>

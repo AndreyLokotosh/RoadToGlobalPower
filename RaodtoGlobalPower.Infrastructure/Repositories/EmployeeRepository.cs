@@ -31,6 +31,42 @@ public class EmployeeRepository : IEmployeeRepository
         return a;
     }
 
+    /// <summary>
+    /// Фильтр по позиции, зарплате и дате найма
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="minSalary"></param>
+    /// <param name="maxSalary"></param>
+    /// <param name="hiredAfter"></param>
+    /// <param name="hiredBefore"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<Employee>> GetFilteredEmployeesAsync(
+        Position? position, 
+        decimal? minSalary, 
+        decimal? maxSalary, 
+        DateOnly? hiredAfter, 
+        DateOnly? hiredBefore)
+    {
+        var query = _context.Employees.AsQueryable();
+
+        if (position.HasValue)
+            query = query.Where(e => e.Position == position.Value);
+
+        if (minSalary.HasValue)
+            query = query.Where(e => e.Salary >= minSalary.Value);
+
+        if (maxSalary.HasValue)
+            query = query.Where(e => e.Salary <= maxSalary.Value);
+
+        if (hiredAfter.HasValue)
+            query = query.Where(e => e.DateHired >= hiredAfter.Value);
+
+        if (hiredBefore.HasValue)
+            query = query.Where(e => e.DateHired <= hiredBefore.Value);
+
+        return await query.ToListAsync();
+    }
+
     public async Task<int> AddEmployeeAsync(Employee employee)
     {
         await _context.Employees.AddAsync(employee);
