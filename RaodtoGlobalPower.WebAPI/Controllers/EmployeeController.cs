@@ -2,6 +2,8 @@
 using RaodtoGlobalPower.Domain.Interfaces;
 using RaodtoGlobalPower.Domain.Models;
 using System.Text.Json.Serialization;
+using RaodtoGlobalPower.WebAPI.DTOs;
+
 namespace RaodtoGlobalPower.WebAPI.Controllers;
 
 [Route("api/[controller]")]
@@ -36,17 +38,21 @@ public class EmployeeController : ControllerBase
     /// <param name="filter"></param>
     /// <returns></returns>
     [HttpGet( "GetEmployeesFilters")]
-    public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployeesFilters([FromQuery] EmployeeFilterDTO filter)
+    public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployeesFilters([FromQuery] EmployeeFilterDto filter)
     {
         var employees = await _employeeRepository.GetFilteredEmployeesAsync(
-            filter.Position, filter.MinSalary, filter.MaxSalary, filter.HiredAfter, filter.HiredBefore
+            filter.Position,
+            filter.MinSalary,
+            filter.MaxSalary,
+            filter.HiredAfter,
+            filter.HiredBefore
         );
 
         var employeeDtos = employees.Select(e => new EmployeeDto
         {
             FirstName = e.FirstName,
             LastName = e.LastName,
-            Position = e.Position?.ToString(),
+            Position = e.Position.ToString(),
             Salary = e.Salary,
             DateOfBirth = e.DateOfBirth,
             DateHired = e.DateHired,
@@ -94,9 +100,9 @@ public class EmployeeController : ControllerBase
         };
 
         return Ok(employeeDto);
-     
+
     }
-    
+
     [HttpPost]
     public async Task<ActionResult<Employee>> CreateEmployee(Employee employee)
     {

@@ -1,10 +1,9 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Http.Json;
+﻿using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using RaodtoGlobalPower.Domain.Interfaces;
 using RaodtoGlobalPower.Infrastructure.Data;
 using RaodtoGlobalPower.Infrastructure.Repositories;
-
+using RaodtoGlobalPower.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args) ?? throw new ArgumentNullException("WebApplication.CreateBuilder(args)");
 
@@ -29,15 +28,7 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IAttestationRepository, AttestationRepository>(); // Добавляем AttestationRepository
 
 // Настройка Swagger
-builder.Services.AddSwaggerGen(c =>
-{
-    // Указываем путь к XML-файлу с комментариями
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath); // Подключаем XML-комментарии
-
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Employee API", Version = "v1" });
-});
+builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
 
