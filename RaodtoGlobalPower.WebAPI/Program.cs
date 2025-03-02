@@ -31,6 +31,11 @@ builder.Services.AddScoped<IAttestationRepository, AttestationRepository>(); // 
 // Настройка Swagger
 builder.Services.AddSwaggerGen(c =>
 {
+    c.MapType<DateOnly>(() => new Microsoft.OpenApi.Models.OpenApiSchema
+    {
+        Type = "string",
+        Format = "date"
+    });
     // Указываем путь к XML-файлу с комментариями
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
